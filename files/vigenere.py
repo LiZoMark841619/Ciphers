@@ -29,9 +29,3 @@ class Vigenere(Cipher):
         bases, offsets = self.new_loc()
         fin_idx = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
         return ''.join([self.alpha[fin_idx[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
-
-if __name__== '__main__':
-    two = Vigenere('barry is the spy', 'dog')
-    print(two.encode())
-    three = Vigenere('ymlok fe qty pbs', 'dog')
-    print(three.decode())

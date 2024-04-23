@@ -17,7 +17,3 @@ class Caesar(Cipher):
             if char in self.alpha: encoded += self.alpha[(self.alpha.find(char) + offset) % 26]
             else: encoded += char
         return encoded
-
-if __name__ == '__main__':
-    one = Caesar('abcd !!, 123')
-    print(one.decode(3))
