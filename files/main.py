@@ -1,17 +1,14 @@
-from my_python.filefinder import helper
+from methods import get_valid_number, get_valid_str
 from caesar import Caesar
 from vigenere import Vigenere
 
-valid_num = helper.get_valid_number
-valid_str = helper.get_valid_str
-
 ciphers = ['caesar', 'vigenere']
-cipher = valid_str(f'Chose from {ciphers} to start! ', *ciphers)
+cipher = get_valid_str(f'Chose from {ciphers} to start! ', *ciphers)
 msg_ = input('Enter a message you want to send! ').lower()
-question = valid_str('Chose from decode or encode! ', 'encode', 'decode')
+question = get_valid_str('Chose from decode or encode! ', 'encode', 'decode')
 
 if cipher == 'caesar':
-    offset_ = valid_num(f'Enter the offset to shift the letters from 0-26! ', 0, 27)
+    offset_ = get_valid_number(f'Enter the offset to shift the letters from 0-26! ', 0, 27)
     if question == 'decode':
         print(Caesar(msg_).decode(offset=offset_))
     else:
