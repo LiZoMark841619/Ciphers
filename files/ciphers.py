@@ -1,7 +1,9 @@
 class Cipher:
     
-    def __init__(self, msg):
+    def __init__(self, msg: str, kind: str):
         self.msg = msg
-    
+        self.kind = kind
+        self.alpha = ''.join([chr(i) for i in range(97, 97+26)])
+
     def __str__(self):
         return f'{self.__class__.__name__}({self.msg})'
