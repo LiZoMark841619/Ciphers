@@ -5,5 +5,5 @@ class Cipher:
         self.kind = kind
         self.alpha = ''.join([chr(i) for i in range(97, 97+26)])
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.__class__.__name__}({self.msg})'

@@ -20,12 +20,12 @@ class Vigenere(Cipher):
         bases, offsets = list(map(f, list(self.msg))), list(map(f, list(key_phrase)))
         return bases, offsets
     
-    def decode(self):
+    def decode(self) -> str:
         bases, offsets = self.new_loc()
         fin_idx = [(bases[i] - offsets[i]) % 26 for i in range(len(bases))]
         return ''.join([self.alpha[fin_idx[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
     
-    def encode(self):
+    def encode(self) -> str:
         bases, offsets = self.new_loc()
         fin_idx = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
         return ''.join([self.alpha[fin_idx[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
