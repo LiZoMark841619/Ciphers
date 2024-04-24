@@ -1,4 +1,5 @@
 from ciphers import Cipher
+
 class Caesar(Cipher):
     
     def __init__(self, msg: str):
