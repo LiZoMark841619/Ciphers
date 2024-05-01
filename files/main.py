@@ -12,10 +12,8 @@ class Game(Valid):
 
     def play(self):
         cipher, message, encryption = self.set_game()
-        if cipher == 'caesar':
-            game = Caesar(message, self.get_valid_number(f'Enter the offset to shift the letters from 0-26! ', 0, 27))
-        else:
-            game = Vigenere(message, input('Enter a keyword! ').lower())
+        if cipher == 'caesar': game = Caesar(message, self.get_valid_number(f'Enter the offset to shift the letters from 0-26! ', 0, 27))
+        else: game = Vigenere(message, input('Enter a keyword! ').lower())
         return game, encryption
 
     def display(self):
