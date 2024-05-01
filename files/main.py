@@ -1,23 +1,27 @@
-from methods import get_valid_number, get_valid_str
+from methods import Valid
 from caesar import Caesar
 from vigenere import Vigenere
 
-ciphers = ['caesar', 'vigenere']
-cipher = get_valid_str(f'Chose from {ciphers} to start! ', *ciphers)
-msg_ = input('Enter a message you want to send! ').lower()
-question = get_valid_str('Chose from decode or encode! ', 'encode', 'decode')
+class Game(Valid):
+    
+    def set_game(self):
+        cipher = self.get_valid_string(f'Chose from [caesar, vigenere] to start! ', 'caesar', 'vigenere')
+        message = input('Enter a message you want to send! ').lower()
+        encryption = self.get_valid_string('Chose from decode or encode! ', 'encode', 'decode')
+        return cipher, message, encryption
 
-if cipher == 'caesar':
-    offset_ = get_valid_number(f'Enter the offset to shift the letters from 0-26! ', 0, 27)
-    print(Caesar(msg_))
-    if question == 'decode':
-        print(f'After decoding the message: {Caesar(msg_).decode(offset=offset_)}')
-    else:
-        print(f'After encoding the message: {Caesar(msg_).encode(offset=offset_)}')
-else:
-    keyword_ = input('Enter a keyword! ').lower()
-    print(Vigenere(msg_, keyword=keyword_))
-    if question == 'decode':
-        print(f'After decoding the message: {Vigenere(msg_, keyword_).decode()}')
-    else:
-        print(f'After encoding the message: {Vigenere(msg_, keyword_).decode()}')
+    def play(self):
+        cipher, message, encryption = self.set_game()
+        if cipher == 'caesar':
+            game = Caesar(message, self.get_valid_number(f'Enter the offset to shift the letters from 0-26! ', 0, 27))
+        else:
+            game = Vigenere(message, input('Enter a keyword! ').lower())
+        return game, encryption
+
+    def display(self):
+        game, encryption = self.play()
+        return game.decode_message() if encryption == 'decode' else game.encode_message()
+    
+if __name__ == '__main__':
+    game = Game()
+    print(game.display())

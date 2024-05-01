@@ -6,26 +6,26 @@ class Vigenere(Cipher):
         super().__init__(msg, kind='vigenere')
         self.keyword = keyword
     
-    def key_gen(self) -> str:
-        key_phrase = ''
+    def generate_keyphrase(self) -> str:
+        keyphrase = ''
         for value in self.msg.split():
             for i in range(len(value)):
-                key_phrase += self.keyword[i % len(self.keyword)]
-            key_phrase += ' '
-        return key_phrase
+                keyphrase += self.keyword[i % len(self.keyword)]
+            keyphrase += ' '
+        return keyphrase
     
-    def new_loc(self) -> tuple:
-        key_phrase = self.key_gen()
+    def making_shifted_indexes(self) -> tuple:
+        keyphrase = self.generate_keyphrase()
         f = lambda x: self.alpha.find(x)
-        bases, offsets = list(map(f, list(self.msg))), list(map(f, list(key_phrase)))
+        bases, offsets = list(map(f, list(self.msg))), list(map(f, list(keyphrase)))
         return bases, offsets
     
-    def decode(self) -> str:
-        bases, offsets = self.new_loc()
-        fin_idx = [(bases[i] - offsets[i]) % 26 for i in range(len(bases))]
-        return ''.join([self.alpha[fin_idx[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
+    def decode_message(self) -> str:
+        bases, offsets = self.making_shifted_indexes()
+        final_indexes = [(bases[i] - offsets[i]) % 26 for i in range(len(bases))]
+        return ''.join([self.alpha[final_indexes[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
     
-    def encode(self) -> str:
-        bases, offsets = self.new_loc()
-        fin_idx = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
-        return ''.join([self.alpha[fin_idx[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
+    def encode_message(self) -> str:
+        bases, offsets = self.making_shifted_indexes()
+        final_indexes = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
+        return ''.join([self.alpha[final_indexes[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
