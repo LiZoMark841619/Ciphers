@@ -16,9 +16,8 @@ class Vigenere(Cipher):
     
     def making_shifted_indexes(self) -> tuple:
         keyphrase = self.generate_keyphrase()
-        f = lambda x: self.alpha.find(x)
-        bases, offsets = list(map(f, list(self.msg))), list(map(f, list(keyphrase)))
-        return bases, offsets
+        find_indexes = lambda x: self.alpha.find(x)
+        return list(map(find_indexes, list(self.msg))), list(map(find_indexes, list(keyphrase)))
     
     def decode_message(self) -> str:
         bases, offsets = self.making_shifted_indexes()

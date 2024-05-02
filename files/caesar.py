@@ -7,15 +7,7 @@ class Caesar(Cipher):
         self.offset = offset
 
     def decode_message(self) -> str:
-        decoded = ''
-        for char in self.msg:
-            if char in self.alpha: decoded += self.alpha[(self.alpha.find(char) + self.offset) % 26]
-            else: decoded += char
-        return decoded
+        return ''.join([self.alpha[(self.alpha.find(char) + self.offset) % 26 ] if char in self.alpha else char for char in self.msg])
     
     def encode_message(self) -> str:
-        encoded = ''
-        for char in self.msg:
-            if char in self.alpha: encoded += self.alpha[(self.alpha.find(char) - self.offset) % 26]
-            else: encoded += char
-        return encoded
+        return ''.join([self.alpha[(self.alpha.find(char) - self.offset) % 26 ] if char in self.alpha else char for char in self.msg])
