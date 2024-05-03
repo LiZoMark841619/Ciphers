@@ -6,6 +6,19 @@ class Vigenere(Cipher):
         super().__init__(msg, kind='vigenere')
         self.keyword = keyword
     
+    def generate_keyphrase(self) -> str:
+        keyphrase = ''
+        for value in self.msg.split():
+            for i in range(len(value)):
+                keyphrase += self.keyword[i % len(self.keyword)]
+            keyphrase += ' '
+        return keyphrase
+    
+    def making_shifted_indexes(self) -> tuple:
+        keyphrase = self.generate_keyphrase()
+        find_indexes = lambda x: self.alpha.find(x)
+        return list(map(find_indexes, list(self.msg))), list(map(find_indexes, list(keyphrase)))
+    
     def decode_message(self) -> str:
         bases, offsets = self.making_shifted_indexes()
         final_indexes = [(bases[i] - offsets[i]) % 26 for i in range(len(bases))]
@@ -15,16 +28,3 @@ class Vigenere(Cipher):
         bases, offsets = self.making_shifted_indexes()
         final_indexes = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
         return ''.join([self.alpha[final_indexes[i]] if self.msg[i] in self.alpha else self.msg[i] for i in range(len(self.msg))])
-    
-    def making_shifted_indexes(self) -> tuple:
-        keyphrase = self.generate_keyphrase()
-        find_indexes = lambda x: self.alpha.find(x)
-        return list(map(find_indexes, list(self.msg))), list(map(find_indexes, list(keyphrase)))
-    
-    def generate_keyphrase(self) -> str:
-        keyphrase = ''
-        for value in self.msg.split():
-            for i in range(len(value)):
-                keyphrase += self.keyword[i % len(self.keyword)]
-            keyphrase += ' '
-        return keyphrase
