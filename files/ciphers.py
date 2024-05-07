@@ -6,4 +6,4 @@ class Cipher:
         self.alpha = ''.join([chr(i) for i in range(97, 97+26)])
 
     def __str__(self) -> str:
-        return f'Cipher({self.kind}) with original message: {self.msg}'
+        return f'Cipher({self.kind}) with message: {self.msg}'

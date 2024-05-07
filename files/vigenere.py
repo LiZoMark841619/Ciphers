@@ -20,7 +20,7 @@ class Vigenere(Cipher):
                         if self.msg[i] in self.alpha
                         else self.msg[i] for i in range(len(self.msg))])
 
-    def making_shifted_indexes(self) -> tuple:
+    def making_shifted_indexes(self) -> tuple[list[int], list[int]]:
         keyphrase = self.generate_keyphrase()
         find_indexes = lambda x: self.alpha.find(x)
         return list(map(find_indexes, list(self.msg))), list(map(find_indexes, list(keyphrase)))

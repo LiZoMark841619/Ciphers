@@ -2,7 +2,7 @@ from ciphers import Cipher
 
 class Caesar(Cipher):
     
-    def __init__(self, msg: str, offset: int):
+    def __init__(self, msg: str, offset: int) -> None:
         super().__init__(msg, kind='caesar')
         self.offset = offset
 
