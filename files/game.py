@@ -26,13 +26,31 @@ class Game(Valid):
         return game.decode_message() if encryption == 'decode' else game.encode_message()
     
     def play(self) -> tuple:
-        cipher, message, encryption = self.set_game()
+        self.set_game()
+        cipher, message, encryption = self.get_game()
         if cipher == 'caesar': 
-            return Caesar(message, self.get_valid_number('Enter the offset to shift the letters from 0-26! ', 0, 27)), encryption
-        return Vigenere(message, input('Enter a keyword! ').lower()), encryption
+            self.set_offset()
+            return Caesar(message, self.get_offset()), encryption
+        else:
+            self.set_keyword()
+            return Vigenere(message, self.get_keyword()), encryption
             
-    def set_game(self) -> tuple:
-        cipher = self.get_valid_string('Chose from [caesar, vigenere] to start! ', 'caesar', 'vigenere')
-        message = input('Enter a message you want to send! ').lower()
-        encryption = self.get_valid_string('Chose from decode or encode! ', 'encode', 'decode')
-        return cipher, message, encryption
+    def set_game(self) -> None:
+        self.cipher = self.get_valid_string('Chose from [caesar, vigenere] to start! ', 'caesar', 'vigenere')
+        self.message = input('Enter a message you want to send! ').lower()
+        self.encryption = self.get_valid_string('Chose from decode or encode! ', 'encode', 'decode')
+        
+    def get_game(self) -> tuple:
+        return self.cipher, self.message, self.encryption
+     
+    def set_offset(self) -> None:
+        self.offset = self.get_valid_number('Enter the offset to shift the letters from 0-26! ', 0, 27)
+    
+    def get_offset(self) -> int:
+        return self.offset
+    
+    def set_keyword(self) -> None:
+        self.keyword = input('Enter your keyword! ').lower()
+        
+    def get_keyword(self) -> str:
+        return self.keyword
