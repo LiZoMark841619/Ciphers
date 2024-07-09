@@ -1,5 +1,4 @@
 class Cipher:
-    
     def __init__(self, msg: str, kind: str) -> None:
         self.msg = msg
         self.kind = kind

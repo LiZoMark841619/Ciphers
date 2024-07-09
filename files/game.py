@@ -1,7 +1,6 @@
 from caesar_vigenere import Caesar, Vigenere
 
 class Valid:
-
     def get_valid_number(self, prompt: str, value_min: int, value_max: int) -> int:
         while True:
             try: 
@@ -20,21 +19,6 @@ class Valid:
             print('Invalid value. Try again! ')
             
 class Game(Valid):
-
-    def display(self) -> str:
-        game, encryption = self.play()
-        return game.decode_message() if encryption == 'decode' else game.encode_message()
-    
-    def play(self) -> tuple:
-        self.set_game()
-        cipher, message, encryption = self.get_game()
-        if cipher == 'caesar': 
-            self.set_offset()
-            return Caesar(message, self.get_offset()), encryption
-        else:
-            self.set_keyword()
-            return Vigenere(message, self.get_keyword()), encryption
-            
     def set_game(self) -> None:
         self.cipher = self.get_valid_string('Chose from [caesar, vigenere] to start! ', 'caesar', 'vigenere')
         self.message = input('Enter a message you want to send! ').lower()
@@ -42,9 +26,9 @@ class Game(Valid):
         
     def get_game(self) -> tuple:
         return self.cipher, self.message, self.encryption
-     
+
     def set_offset(self) -> None:
-        self.offset = self.get_valid_number('Enter the offset to shift the letters from 0-26! ', 0, 27)
+        self.offset = self.get_valid_number('Enter the offset to shift the letters from 0-26! ', 0, 26)
     
     def get_offset(self) -> int:
         return self.offset
@@ -54,3 +38,16 @@ class Game(Valid):
         
     def get_keyword(self) -> str:
         return self.keyword
+
+    def play(self) -> tuple:
+        self.set_game()
+        cipher, message, encryption = self.get_game()
+        if cipher == 'caesar': 
+            self.set_offset()
+            return Caesar(message, self.get_offset()), encryption
+        self.set_keyword()
+        return Vigenere(message, self.get_keyword()), encryption
+        
+    def display(self) -> str:
+        game, encryption = self.play()
+        return game.decode_message() if encryption == 'decode' else game.encode_message()
