@@ -1,4 +1,7 @@
 from ciphers import Cipher
+from string import ascii_lowercase
+
+alphabet = ascii_lowercase
 
 class Caesar(Cipher):
     def __init__(self, msg: str, offset: int) -> None:
@@ -6,14 +9,10 @@ class Caesar(Cipher):
         self.offset = offset
 
     def decode_message(self) -> str:
-        return ''.join([self.alpha[(self.alpha.find(char) + self.offset) % 26]
-                        if char in self.alpha
-                        else char for char in self.msg])
+        return ''.join([alphabet[(alphabet.find(char) + self.offset) % 26] if char in alphabet else char for char in self.msg])
     
     def encode_message(self) -> str:
-        return ''.join([self.alpha[(self.alpha.find(char) - self.offset) % 26]
-                        if char in self.alpha
-                        else char for char in self.msg])
+        return ''.join([alphabet[(alphabet.find(char) - self.offset) % 26] if char in alphabet else char for char in self.msg])
         
 class Vigenere(Cipher):
     def __init__(self, msg: str, keyword: str) -> None:
@@ -30,19 +29,15 @@ class Vigenere(Cipher):
     
     def making_shifted_indexes(self) -> tuple[list[int], list[int]]:
         keyphrase = self.generate_keyphrase()
-        find_indexes = lambda x: self.alpha.find(x)
-        return list(map(find_indexes, list(self.msg))), list(map(find_indexes, list(keyphrase)))
+        find_indexes = lambda x: alphabet.find(x)
+        return list(map(find_indexes, self.msg)), list(map(find_indexes, keyphrase))
 
     def decode_message(self) -> str:
         bases, offsets = self.making_shifted_indexes()
         final_indexes = [(bases[i] - offsets[i]) % 26 for i in range(len(bases))]
-        return ''.join([self.alpha[final_indexes[i]]
-                        if self.msg[i] in self.alpha
-                        else self.msg[i] for i in range(len(self.msg))])
+        return ''.join([alphabet[final_indexes[i]] if self.msg[i] in alphabet else self.msg[i] for i in range(len(self.msg))])
     
     def encode_message(self) -> str:
         bases, offsets = self.making_shifted_indexes()
         final_indexes = [(bases[i] + offsets[i]) % 26 for i in range(len(bases))]
-        return ''.join([self.alpha[final_indexes[i]]
-                        if self.msg[i] in self.alpha
-                        else self.msg[i] for i in range(len(self.msg))])
+        return ''.join([alphabet[final_indexes[i]] if self.msg[i] in alphabet else self.msg[i] for i in range(len(self.msg))])

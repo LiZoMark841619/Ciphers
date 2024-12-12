@@ -5,14 +5,16 @@ class Valid:
         while True:
             try: 
                 value = int(input(prompt))
-                if value_min <= value <= value_max: return value
+                if value in range(value_min, value_max+1):
+                    return value
                 print('The number is out of range.\n')
             except ValueError: print('Invalid value. Try again!\n')
 
     def get_valid_string(self, prompt: str, *args) -> str:
         while True:
             value = input(prompt).lower()
-            if value in args: return value
+            if value in args:
+                return value
             print('Invalid value. Try again! ')
             
 class Game(Valid):
@@ -34,11 +36,10 @@ class Game(Valid):
         self.keyword = input('Enter your keyword! ').lower()
         
     def get_keyword(self) -> str:
-        while True:
-            if self.keyword.isalpha(): return self.keyword
+        while not self.keyword.isalpha():
             print('Only letters are allowed to set the keyword! Try again!')
             self.set_keyword()
-            continue
+        return self.keyword
             
     def play(self) -> tuple:
         self.set_game()
