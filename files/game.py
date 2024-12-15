@@ -52,4 +52,4 @@ class Game(Valid):
         
     def display(self) -> str:
         game, encryption = self.play()
-        return game.decode_message() if encryption == 'decode' else game.encode_message()
+        return game.code_message(encryption)
