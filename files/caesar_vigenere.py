@@ -8,8 +8,8 @@ class Caesar(Cipher):
         super().__init__(msg, kind='caesar')
         self.offset = offset
 
-    def code_message(self, code_type: str) -> str:
-        offset = self.offset * -1 if code_type == 'encode' else self.offset
+    def code_message(self, encode: bool | None = True) -> str:
+        offset = self.offset * -1 if encode is None or encode == True else self.offset
         return ''.join([alphabet[(alphabet.find(char) + offset) % 26] if char in alphabet else char for char in self.msg])
         
 class Vigenere(Cipher):
@@ -30,8 +30,8 @@ class Vigenere(Cipher):
         find_indexes = lambda x: alphabet.find(x)
         return list(map(find_indexes, self.msg)), list(map(find_indexes, keyphrase))
 
-    def code_message(self, code_type: str) -> str:
+    def code_message(self, encode: bool | None = True) -> str:
         bases, offsets = self.making_shifted_indexes()
-        modified_offsets = [-num for num in offsets] if code_type == 'encode' else offsets
+        modified_offsets = [-num for num in offsets] if encode is None or encode == True else offsets
         final_indexes = [(bases[i] + modified_offsets[i]) % 26 for i in range(len(bases))]
         return ''.join([alphabet[final_indexes[i]] if self.msg[i] in alphabet else self.msg[i] for i in range(len(self.msg))])
